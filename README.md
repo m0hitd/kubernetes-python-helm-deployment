@@ -17,9 +17,10 @@ To run this on your local machine, you need the following tools installed:
 
 ## 🚀 Getting Started
 
+Run these commands in powershell
 ### 1. Start the Cluster
 First, ensure Docker is running, then start your local Kubernetes cluster:
-```powershell
+
 minikube start
 2. Install the Chart
 Navigate to the my-capstone-chart folder and install the application using Helm:
