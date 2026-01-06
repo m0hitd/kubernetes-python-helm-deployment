@@ -1,4 +1,4 @@
-# kubernetes-python-helm-deployment
+# python-k8s-observability-stack
 "A DevOps capstone project demonstrating container orchestration of a Python Flask app using Kubernetes and Helm on a Minikube cluster."
 
 # 🚀 Python Microservice Deployment (Kubernetes & Helm)
