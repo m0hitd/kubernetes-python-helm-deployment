@@ -1,41 +1,56 @@
-# python-k8s-observability-stack
-"A DevOps capstone project demonstrating container orchestration of a Python Flask app using Kubernetes and Helm on a Minikube cluster."
+# Python-K8S-Observability-Stack
 
-# 🚀 Python Microservice Deployment (Kubernetes & Helm)
+"A Cloud-Native DevOps capstone project demonstrating container orchestration of a Python Flask microservice using Kubernetes and Helm on a Minikube cluster."
 
-This is a DevOps Capstone project demonstrating how to package, deploy, and manage a Python Flask application in a local Kubernetes environment using Helm.
+---
 
 ## 📌 Project Overview
-The goal of this project was to move away from manual deployments. By creating a custom Helm chart, I automated the process of deploying a microservice, ensuring it is scalable and easily configurable.
+This project serves as a comprehensive demonstration of modern deployment workflows. By moving away from manual `kubectl` manifests, this project implements a **Helm-based deployment strategy** to automate the lifecycle of a Python application. 
 
-## 🛠 Prerequisites
-To run this on your local machine, you need the following tools installed:
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-* [Minikube](https://minikube.sigs.k8s.io/docs/start/)
-* [Helm](https://helm.sh/docs/intro/install/)
-* [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+The goal was to build a scalable, repeatable, and configurable infrastructure that mimics a production-grade CI/CD environment.
+
+## 🛠 Tech Stack & Tools
+* **Application:** Python 3.9 (Flask)
+* **Containerization:** Docker (Multi-stage builds)
+* **Orchestration:** Kubernetes (Minikube)
+* **Package Management:** Helm (Custom Charts)
+* **Automation:** PowerShell / Bash Scripting
+
+---
+
+## 🏗 Key Engineering Features
+
+### 1. Infrastructure as Code (IaC) with Helm
+Instead of hard-coded YAML files, this project utilizes **Helm Charts**. 
+* **Reusability:** Uses `values.yaml` for environment-specific configurations.
+* **Consistency:** Standardizes deployments across Dev, QA, and Prod.
+* **Atomic Updates:** Enables easy rollbacks and versioning of the infrastructure.
+
+### 2. Service Discovery & Networking
+* **ClusterIP:** Internal communication management.
+* **Port-Forwarding:** Bridging the local development environment to the cluster network for real-time testing.
+
+### 3. Resource Management
+The deployment is configured with specific resource requests and limits to ensure cluster stability and prevent "noisy neighbor" issues in a shared environment.
+
+---
 
 ## 🚀 Getting Started
 
-Run these commands in powershell
-### 1. Start the Cluster
-First, ensure Docker is running, then start your local Kubernetes cluster:
+### Prerequisites
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+* [Helm](https://helm.sh/docs/intro/install/)
 
-minikube start
-2. Install the Chart
-Navigate to the my-capstone-chart folder and install the application using Helm:
+### 1. Initialize the Environment
+Start the local cluster using the Docker driver:
+```powershell
+minikube start --driver=docker
 
-PowerShell
+### 2. Deploy via Helm
+Navigate to the chart directory and install the release:
 
+powershell
 cd my-capstone-chart
-helm install my-project .
-3. Connect to the Application
-Because Minikube runs in an isolated environment, you need to "tunnel" the traffic to see the app in your browser:
-
-PowerShell
-
-# Get the pod name
-$POD_NAME = (kubectl get pods -l "app.kubernetes.io/name=my-capstone-chart" -o jsonpath="{.items[0].metadata.name}")
-
-# Start the port-forward (Access via http://localhost:8080)
-kubectl port-forward $POD_NAME 8080:5000
+helm lint .               # Validate chart syntax
+helm install my-project . # Deploy the application
