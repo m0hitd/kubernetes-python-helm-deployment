@@ -46,11 +46,25 @@ The deployment is configured with specific resource requests and limits to ensur
 Start the local cluster using the Docker driver:
 ```powershell
 minikube start --driver=docker
+```
 
 ### 2. Deploy via Helm
 Navigate to the chart directory and install the release:
 
-powershell
+```powershell
 cd my-capstone-chart
 helm lint .               # Validate chart syntax
 helm install my-project . # Deploy the application
+```
+3. Connect to the Application
+Because Minikube runs in an isolated environment, you need to "tunnel" the traffic to see the app in your browser at http://localhost:8080. Run the following PowerShell logic:
+
+```PowerShell
+
+# Get the pod name
+$POD_NAME = (kubectl get pods -l "app.kubernetes.io/name=my-capstone-chart" -o jsonpath="{.items[0].metadata.name}")
+
+# Start the port-forward (Access via http://localhost:8080)
+Write-Host "Tunnelling traffic to $POD_NAME..." -ForegroundColor Green
+kubectl port-forward $POD_NAME 8080:5000
+```
