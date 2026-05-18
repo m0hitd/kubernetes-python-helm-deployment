@@ -68,3 +68,4 @@ $POD_NAME = (kubectl get pods -l "app.kubernetes.io/name=my-capstone-chart" -o j
 Write-Host "Tunnelling traffic to $POD_NAME..." -ForegroundColor Green
 kubectl port-forward $POD_NAME 8080:5000
 ```
+Thank you
